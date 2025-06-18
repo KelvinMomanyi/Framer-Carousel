@@ -55,7 +55,10 @@ export function App() {
     const [editMode, setEditMode] = useState(false);
     const [editingSlide, setEditingSlide] = useState(null);
     const [showSettings, setShowSettings] = useState(false);
-    
+    const [isUsageGuideOpen, setIsUsageGuideOpen] = useState(true);
+    const toggleUsageGuide = () => {
+        setIsUsageGuideOpen(!isUsageGuideOpen);
+    };
     // Settings
     const [settings, setSettings] = useState({
         autoPlay: true,
@@ -63,6 +66,7 @@ export function App() {
         showDots: true,
         showArrows: true,
         height: 400,
+        width: 1200,
         borderRadius: 12
     });
 
@@ -192,8 +196,8 @@ export function App() {
             // Make sure this URL matches your actual published component URL
             url: "https://framer.com/m/Carousel-msBD.js", 
             attributes: {
-                width: "1200px",
-                height: `${settings.height}px`,
+               width: `${settings.width}px`,
+               height: `${settings.height}px`,
                 // Pass the data as individual properties that match the component's property controls
                 slides: formattedSlides,
                 autoPlay: settings.autoPlay,
@@ -201,6 +205,7 @@ export function App() {
                 showDots: settings.showDots,
                 showArrows: settings.showArrows,
                 carouselHeight: settings.height,
+                carouselWidth: settings.width,
                 tint: getGradientColor(slides[0]?.bg || 'gradient-purple-pink')
             }
         });
@@ -355,11 +360,11 @@ export function App() {
             )}
 
             {/* Carousel */}
-            <div 
+            {/* <div 
                 className="carousel-wrapper"
                 style={{ height: `${settings.height}px`, borderRadius: `${settings.borderRadius}px` }}
-            >
-                <div 
+            > */}
+                {/* <div 
                     className="slides-container"
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
@@ -397,10 +402,10 @@ export function App() {
                             )}
                         </div>
                     ))}
-                </div>
+                </div> */}
 
                 {/* Navigation Arrows */}
-                {settings.showArrows && (
+                {/* {settings.showArrows && (
                     <>
                         <button onClick={goToPrevious} className="nav-arrow nav-arrow-left">
                             <ChevronLeft className="icon-md" />
@@ -409,10 +414,10 @@ export function App() {
                             <ChevronRight className="icon-md" />
                         </button>
                     </>
-                )}
+                )} */}
 
                 {/* Slide Indicators */}
-                {settings.showDots && (
+                {/* {settings.showDots && (
                     <div className="indicators">
                         {slides.map((_, index) => (
                             <button
@@ -424,11 +429,11 @@ export function App() {
                             </button>
                         ))}
                     </div>
-                )}
-            </div>
+                )} */}
+            {/* </div> */}
 
             {/* Control Panel */}
-            <div className="control-panel">
+            {/* <div className="control-panel">
                 <div className="slide-counter">
                     <span className="counter-text">
                         Slide {currentSlide + 1} of {slides.length}
@@ -458,7 +463,7 @@ export function App() {
                         <ChevronRight className="icon-sm" />
                     </button>
                 </div>
-            </div>
+            </div> */}
 
             {/* Canvas Export Controls */}
             <div className="export-panel">
@@ -488,7 +493,7 @@ export function App() {
             )}
 
             {/* Slide Thumbnails */}
-            <div className="thumbnails">
+            {/* <div className="thumbnails">
                 {slides.map((slide, index) => (
                     <div
                         key={slide.id}
@@ -503,7 +508,7 @@ export function App() {
                         {!slide.image && (index + 1)}
                     </div>
                 ))}
-            </div>
+            </div> */}
 
             {/* Edit Modal */}
             {editingSlide && (
@@ -516,16 +521,21 @@ export function App() {
 
             {/* Usage Guide */}
             <div className="usage-guide">
-                <h3 className="guide-title">How to Use This Customizable Carousel:</h3>
-                <div className="guide-content">
-                    <p>• <strong>Add Slides:</strong> Click the + button to add new slides</p>
-                    <p>• <strong>Edit Content:</strong> Enable edit mode and click the edit icon on slides</p>
-                    <p>• <strong>Upload Images:</strong> Use the image upload in the edit modal</p>
-                    <p>• <strong>Customize:</strong> Use the settings panel to adjust behavior</p>
-                    <p>• <strong>Navigate:</strong> Click thumbnails or use arrow buttons</p>
-                    <p>• <strong>Export:</strong> Use the canvas export buttons to add to Framer</p>
-                </div>
+            <h3 
+                className={`guide-title ${!isUsageGuideOpen ? 'collapsed' : ''}`}
+                onClick={toggleUsageGuide}
+            >
+                How to Use This Customizable Carousel:
+            </h3>
+            <div className={`guide-content ${!isUsageGuideOpen ? 'collapsed' : ''}`}>
+                <p>• <strong>Add Slides:</strong> Use the "Slides Data" array control in Framer's property panel to add new slides</p>
+                <p>• <strong>Configure Content:</strong> For each slide, set the title, description, and background image</p>
+                <p>• <strong>Upload Images:</strong> Use Framer's image control to upload background images for each slide</p>
+                <p>• <strong>Auto-play Settings:</strong> Toggle auto-play and adjust interval timing and direction</p>
+                <p>• <strong>Visual Controls:</strong> Show/hide content overlays and navigation arrows as needed</p>
+                <p>• <strong>Responsive Design:</strong> Component automatically adapts to different screen sizes</p>
             </div>
+        </div>
         </div>
     );
 }

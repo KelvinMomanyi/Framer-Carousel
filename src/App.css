@@ -578,19 +578,52 @@
   }
   
   .guide-title {
+    font-size: 0.8rem;
     font-weight: 600;
-    color: #1e3a8a;
-    margin-bottom: 8px;
-  }
-  
-  .guide-content {
-    font-size: 14px;
-    color: #1e40af;
-  }
-  
-  .guide-content p {
-    margin-bottom: 4px;
-  }
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.guide-title:hover {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.guide-title::before {
+    font-size: 0.8rem;
+}
+
+.guide-title::after {
+    content: "▼";
+    margin-left: auto;
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+    color: #667eea;
+}
+
+.guide-title.collapsed::after {
+    transform: rotate(-90deg);
+}
+
+.guide-content {
+    display: grid;
+    gap: 1rem;
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, opacity 0.3s ease-out;
+    opacity: 1;
+}
+
+.guide-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
   
   /* Responsive Design */
   @media (max-width: 768px) {
